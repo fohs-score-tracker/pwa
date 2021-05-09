@@ -3,43 +3,64 @@ var app = Vue.createApp({
         return {
             players: [],
             newPlayerName: "",
-            idCount: 0
+            apiEndpoint: "http://localhost:8000",  // TODO: set in UI
         }
     },
+    created() {
+        this.loadPlayers();
+    },
     methods: {
+        apiCall(path, args) {
+            return fetch(this.apiEndpoint + path, args);
+        },
         addPlayer() {
             if (this.newPlayerName != "") {
-                this.players.push({
-                    name: this.newPlayerName,
-                    points: 0,
-                    id: ++this.idCount
-                });
+                let payload = {
+                    email: this.newPlayerName + "@example.com",  // TODO
+                    full_name: this.newPlayerName,
+                    password: ""
+                };
                 this.newPlayerName = "";
+                this.apiCall("/users/new", {
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                })
+                    .then(p => p.ok
+                        ? p.json().then(j => this.players.push(j))
+                        : p.json().then(j => console.warn("%o: %o", payload, j))
+                    );
             }
+        },
+        loadPlayers() {
+            this.apiCall("/users").then(f => f.json()).then(j => this.players = j);
+        }
+    },
+    provide() {
+        return {
+            apiCall: this.apiCall
         }
     }
 });
 
 app.component("player", {
     template: "#player-template",
+    inject: ["apiCall"],
     props: {
-        name: String,
+        full_name: String,
         id: Number,
-        points: Number
     },
     methods: {
-        addPoint() {
-            this.$root.players.find(p => p.id == this.id).points++;
-        },
         removePlayer() {
-            this.$root.players = this.$root.players.filter(p => p.id != this.id);
+            this.apiCall(`/users/${this.id}`, { method: "DELETE" }).then(r => {
+                if (r.ok)
+                    this.$root.players = this.$root.players.filter(p => p.id != this.id);
+            });
         }
     }
 });
 
 var vm;
-
-window.onload = function() {
+window.onload = function () {
     vm = app.mount("#app");
     $("#app").css("display", "block");
 };

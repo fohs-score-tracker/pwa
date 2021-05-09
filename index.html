@@ -14,11 +14,25 @@
         <div id="app" class="container mt-4" style="display: none">
             <h1 class="text-center">ScoreTracker</h1>
             <div>
-                <form class="d-flex" @submit.prevent="addPlayer">
-                    <input class="form-control" placeholder="Name" v-model="newPlayerName">
-                    <button class="btn btn-primary flex-shrink-0 ml-2">
-                        <i class="fas fa-user-plus"></i>
-                    </button>
+                <form @submit.prevent="loadPlayers" class="mb-1">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="API Endpoint" v-model="apiEndpoint">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" title="Refresh player list">
+                                <i class="fas fa-fw fa-sync"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <form @submit.prevent="addPlayer">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="Name" v-model="newPlayerName">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" title="Add player">
+                                <i class="fas fa-fw fa-user-plus"></i>
+                            </button>
+                        </div>
+                    </div>
                 </form>
                 <player v-for="player in players" v-bind="player">
                 </player>
@@ -26,14 +40,14 @@
         </div>
         <template id="player-template">
             <div class="border rounded bg-light m-1 p-1 clearfix">
-                <span class="lead">{{ name }}</span>
+                <span class="lead">{{ full_name }}</span>
                 <div>
-                    Points: <b>{{ points }}</b>
+                    ID: <b>{{ id }}</b>
                 </div>
                 <div class="btn-group float-right">
-                    <button class="btn btn-primary" @click="addPoint">
+                    <!-- <button class="btn btn-primary" @click="addPoint">
                         <i class="fas fa-plus"></i>
-                    </button>
+                    </button> -->
                     <button class="btn btn-danger" @click="removePlayer">
                         <i class="fas fa-user-minus"></i>
                     </button>
