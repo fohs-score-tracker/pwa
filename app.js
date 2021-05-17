@@ -3,7 +3,7 @@ var app = Vue.createApp({
         return {
             players: [],
             newPlayerName: "",
-            apiEndpoint: "http://localhost:8000",  // TODO: set in UI
+            apiEndpoint: "https://fohs-score-tracker.herokuapp.com",
         }
     },
     created() {
@@ -16,12 +16,10 @@ var app = Vue.createApp({
         addPlayer() {
             if (this.newPlayerName != "") {
                 let payload = {
-                    email: this.newPlayerName + "@example.com",  // TODO
-                    full_name: this.newPlayerName,
-                    password: ""
+                    name: this.newPlayerName,
                 };
                 this.newPlayerName = "";
-                this.apiCall("/users/new", {
+                this.apiCall("/players/new", {
                     method: "POST",
                     body: JSON.stringify(payload)
                 })
@@ -32,7 +30,7 @@ var app = Vue.createApp({
             }
         },
         loadPlayers() {
-            this.apiCall("/users").then(f => f.json()).then(j => this.players = j);
+            this.apiCall("/players").then(f => f.json()).then(j => this.players = j);
         }
     },
     provide() {
@@ -46,12 +44,12 @@ app.component("player", {
     template: "#player-template",
     inject: ["apiCall"],
     props: {
-        full_name: String,
+        name: String,
         id: Number,
     },
     methods: {
         removePlayer() {
-            this.apiCall(`/users/${this.id}`, { method: "DELETE" }).then(r => {
+            this.apiCall(`/players/${this.id}`, { method: "DELETE" }).then(r => {
                 if (r.ok)
                     this.$root.players = this.$root.players.filter(p => p.id != this.id);
             });
