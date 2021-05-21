@@ -53,10 +53,12 @@ var app = Vue.createApp({
             // TODO: save login info somewhere
             this.authHeader = `Basic ${btoa(`${this.email}:${this.password}`)}`;
             this.apiCall("/users/me").then(r => {
-                if (r.ok)
+                if (r.ok) {
                     $("#login").modal("hide");
-                else
+                    this.loadPlayers();
+                } else {
                     r.json().then(j => this.loginError = j.detail + ".");
+                }
             }).catch(e => this.loginError = "Can't connect to server.");
         }
     },
