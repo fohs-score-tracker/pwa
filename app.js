@@ -9,6 +9,7 @@ var app = Vue.createApp({
             newPlayerName: "",
             password: "",
             players: [],
+            waitingForLogin: false
         }
     },
     mounted() {
@@ -54,6 +55,7 @@ var app = Vue.createApp({
             }
             // TODO: save login info somewhere
             this.authHeader = `Basic ${btoa(`${this.email}:${this.password}`)}`;
+            this.waitingForLogin = true;
             this.apiCall("/users/me").then(r => {
                 if (r.ok) {
                     this.loginModal.hide();
@@ -61,7 +63,11 @@ var app = Vue.createApp({
                 } else {
                     r.json().then(j => this.loginError = j.detail + ".");
                 }
-            }).catch(e => this.loginError = "Can't connect to server.");
+            }).catch(e => {
+                this.loginError = "Can't connect to server.";
+            }).finally(() => {
+                this.waitingForLogin = false;
+            });
         }
     },
     provide() {

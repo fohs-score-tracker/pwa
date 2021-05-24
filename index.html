@@ -36,23 +36,26 @@
                             </h5>
                         </div>
                         <form class="modal-body" @submit.prevent="login">
-                            <p class="text-danger" v-if="loginError">
-                                <i class="fas fa-times-circle"></i>
-                                {{ loginError }}
-                            </p>
-                            <div class="mb-3">
-                                <label for="email" class="form-label"><i class="fa-fw far fa-envelope"></i> Email</i></label>
-                                <input ref="email" required type="email" class="form-control" v-model="email" placeholder="Enter an email address">
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label"><i class="fa-fw fas fa-key"></i> Password</label>
-                                <input ref="password" required type="password" class="form-control" v-model="password" placeholder="Enter a password">
-                            </div>
-                            <input type="submit" class="d-none"> <!-- This is required for the Enter key to work -->
+                            <!-- Disable every field while we wait for login -->
+                            <fieldset :disabled="waitingForLogin">
+                                <p class="text-danger" v-if="loginError">
+                                    <i class="fas fa-times-circle"></i>
+                                    {{ loginError }}
+                                </p>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label"><i class="fa-fw far fa-envelope"></i> Email</i></label>
+                                    <input ref="email" required type="email" class="form-control" v-model="email" placeholder="Enter an email address">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label"><i class="fa-fw fas fa-key"></i> Password</label>
+                                    <input ref="password" required type="password" class="form-control" v-model="password" placeholder="Enter a password">
+                                </div>
+                                <input type="submit" class="d-none"> <!-- This is required for the Enter key to work -->
+                            </fieldset>
                         </form>
                         <div class="modal-footer bg-light">
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" :disabled="waitingForLogin">
                                     <i class="fas fa-sliders-h"></i>
                                     Settings
                                 </button>
@@ -68,8 +71,9 @@
                                     </div>
                                 </ul>
                             </div>
-                            <button class="btn btn-primary" @click="login">
-                                <i class="fas fa-sign-in-alt"></i>
+                            <button class="btn btn-primary" @click="login" :disabled="waitingForLogin">
+                                <i class="fas fa-sign-in-alt" v-if="!waitingForLogin"></i>
+                                <i class="fas fa-circle-notch fa-spin" v-else></i>
                                 Login
                             </button>
                         </div>
