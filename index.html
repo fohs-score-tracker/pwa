@@ -36,7 +36,7 @@
                             </h5>
                         </div>
                         <form class="modal-body" @submit.prevent="login">
-                            <p  class="alert alert-danger alert-dismissible d-flex align-items-center" v-if="loginWarning">
+                            <p class="alert alert-danger alert-dismissible d-flex align-items-center" v-if="loginWarning">
                                 <span class="fas fa-exclamation-triangle fs-5 me-1"></span>
                                 Can't connect to server
                                 <button type="button" class="btn btn-close" @click="loginWarning = false"></button>
