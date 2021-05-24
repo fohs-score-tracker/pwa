@@ -36,19 +36,22 @@
                             </h5>
                         </div>
                         <form class="modal-body" @submit.prevent="login">
+                            <p  class="alert alert-danger alert-dismissible d-flex align-items-center" v-if="loginWarning">
+                                <span class="fas fa-exclamation-triangle fs-5 me-1"></span>
+                                Can't connect to server
+                                <button type="button" class="btn btn-close" @click="loginWarning = false"></button>
+                            </p>
                             <!-- Disable every field while we wait for login -->
                             <fieldset :disabled="waitingForLogin">
-                                <p class="text-danger" v-if="loginError">
-                                    <i class="fas fa-times-circle"></i>
-                                    {{ loginError }}
-                                </p>
-                                <div class="mb-3">
+                                <div class="mb-3 form-floating">
+                                    <input ref="email" required type="email" class="form-control" :class="{'is-invalid': emailHint}" v-model="email" placeholder="Enter an email address">
                                     <label for="email" class="form-label"><i class="fa-fw far fa-envelope"></i> Email</i></label>
-                                    <input ref="email" required type="email" class="form-control" v-model="email" placeholder="Enter an email address">
+                                    <span class="form-text text-danger" v-if="emailHint">{{ emailHint }} </span>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 form-floating">
+                                    <input ref="password" required type="password" class="form-control" :class="{'is-invalid': passwordHint}" v-model="password" placeholder="Enter a password">
                                     <label for="password" class="form-label"><i class="fa-fw fas fa-key"></i> Password</label>
-                                    <input ref="password" required type="password" class="form-control" v-model="password" placeholder="Enter a password">
+                                    <span class="form-text text-danger" v-if="passwordHint">{{ passwordHint }} </span>
                                 </div>
                                 <input type="submit" class="d-none"> <!-- This is required for the Enter key to work -->
                             </fieldset>

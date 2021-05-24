@@ -4,10 +4,12 @@ var app = Vue.createApp({
             apiBase: "https://fohs-score-tracker.herokuapp.com",
             authHeader: "",
             email: "",
-            loginError: "",
+            emailHint: "",
             loginModal: null,
+            loginWarning: false,
             newPlayerName: "",
             password: "",
+            passwordHint: "",
             players: [],
             waitingForLogin: false
         }
@@ -46,11 +48,14 @@ var app = Vue.createApp({
             this.apiCall("/players").then(f => f.json()).then(j => this.players = j);
         },
         login() {
+            this.emailHint = "";
+            this.passwordHint = "";
+            this.loginWarning = false;
             if (!this.$refs.email.checkValidity()) {
-                this.loginError = "Please enter a valid email address";
+                this.emailHint = "Please enter a valid email address.";
                 return;
             } else if (!this.$refs.password.checkValidity()) {
-                this.loginError = "Please enter a password.";
+                this.passwordHint = "Please enter a password.";
                 return;
             }
             // TODO: save login info somewhere
@@ -61,10 +66,15 @@ var app = Vue.createApp({
                     this.loginModal.hide();
                     this.loadPlayers();
                 } else {
-                    r.json().then(j => this.loginError = j.detail + ".");
+                    r.json().then(j => {
+                        if (j.detail.includes("password"))
+                            this.passwordHint = j.detail + "."
+                        else
+                            this.emailHint = j.detail + "."
+                    });
                 }
             }).catch(e => {
-                this.loginError = "Can't connect to server.";
+                this.loginWarning = true;
             }).finally(() => {
                 this.waitingForLogin = false;
             });
