@@ -19,6 +19,7 @@
 <body>
     <div id="app" class="container mt-4">
         <!-- Main app HTML -->
+        <button class="btn btn-primary float-end" type="button"  data-bs-toggle="modal" data-bs-target="#settings"> <i class="fas fa-cog"> </i> </button>
         <h1 class="text-center text-secondary"><b class="text-primary">FOHS</b> ScoreTracker</h1>
         <div class="text-center">
             <canvas id="main-canvas" width="580" height="348" style="border: 1px solid white;"></canvas>
@@ -27,7 +28,7 @@
             <div class="input-group">
                 <input class="form-control" placeholder="Name" v-model="newPlayerName">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" title="Add player">
+                    <button class="btn btn-primary" title="Add player"> 
                         <i class="fas fa-fw fa-user-plus"></i>
                     </button>
                 </div>
@@ -112,22 +113,118 @@
             </div>
         </div>
     </div>
-    <!-- Templates -->
-    <template id="player-template">
-        <div class="col-md-6">
-            <div class="border bg-light p-1 clearfix">
-                <span class="lead">{{ name }}</span>
-                <div>
-                    ID: <b>{{ id }}</b>
+    <div id="login" ref="login" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-secondary">
+                    <h5 class="modal-title text-white">
+                        <i class="fas fa-chart-line"></i>
+                        FOHS ScoreTracker
+                    </h5>
                 </div>
-                <div class="btn-group float-end">
-                    <button class="btn btn-danger" @click="removePlayer">
-                        <i class="fas fa-user-minus"></i>
+                <form class="modal-body" @submit.prevent="login">
+                    <p class="alert alert-danger alert-dismissible d-flex align-items-center" v-if="loginWarning">
+                        <span class="fas fa-exclamation-triangle fs-5 me-1"></span>
+                        Can't connect to server
+                        <button type="button" class="btn btn-close" @click="loginWarning = false"></button>
+                    </p>
+                    <p class="text-center">
+                        <img src="court-placeholder.png" class="img-fluid w-75">
+                    </p>
+                    <p>
+                        <!-- TODO: actually put something here -->
+                        Something describing the app, purpose, status, etc.
+                    </p>
+                    <h4>Login</h4>
+                    <!-- Disable every field while we wait for login -->
+                    <fieldset :disabled="waitingForLogin" class="row g-2">
+                        <div class="col-md">
+                            <div class="form-floating">
+                                <input ref="email" required type="email" class="form-control"
+                                    :class="{'is-invalid': emailHint}" v-model="email" placeholder="Email address">
+                                <label for="email" class="form-label"><i class="fa-fw far fa-envelope"></i>
+                                    Email</i></label>
+                                <span class="form-text text-danger" v-if="emailHint">{{ emailHint }} </span>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-floating">
+                                <input ref="password" required type="password" class="form-control"
+                                    :class="{'is-invalid': passwordHint}" v-model="password" placeholder="Password">
+                                <label for="password" class="form-label"><i class="fa-fw fas fa-key"></i>
+                                    Password</label>
+                                <span class="form-text text-danger" v-if="passwordHint">{{ passwordHint }} </span>
+                            </div>
+                        </div>
+                        <input type="submit" class="d-none"> <!-- This is required for the Enter key to work -->
+                    </fieldset>
+                </form>
+                <div class="modal-footer bg-light">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                            :disabled="waitingForLogin">
+                            <i class="fas fa-sliders-h"></i>
+                            Settings
+                        </button>
+                        <ul class="dropdown-menu">
+                            <h6 class="dropdown-header text-danger">
+                                <!-- This warning will stop no one but I'm putting it here anyways -->
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Don't change these unless you know what you're doing.
+                            </h6>
+                            <div class="form-group px-3">
+                                <label for="base">API Base</label>
+                                <input class="form-control" name="base" v-model="apiBase">
+                            </div>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary" @click="login" :disabled="waitingForLogin">
+                        <i class="fas fa-sign-in-alt" v-if="!waitingForLogin"></i>
+                        <i class="fas fa-circle-notch fa-spin" v-else></i>
+                        Login
                     </button>
                 </div>
             </div>
         </div>
-    </template>
+    </div>
+    <!-- TODO Figure out how to trigger this 😃 -->
+    <div id="settings" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Settings</h5>
+                </div>
+                    <div class="modal-body"> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input rounded-pill" type="checkbox" id="flexSwitchCheckDefault" disabled>
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Dark mode</label>
+                          </div>
+                        </div>
+                        <div class="modal-footer"></div>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Templates -->
+        <template id="player-template">
+            <div class="col-md-6">
+                <div class="border bg-light p-1 clearfix">
+                    <span class="lead">{{ name }}</span>
+                    <div>
+                        ID: <b>{{ id }}</b>
+                    </div>
+                    <div class="btn-group float-end">
+                        <button class="btn btn-danger" @click="removePlayer">
+                            <i class="fas fa-user-minus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
 </body>
 
 </html>
