@@ -18,7 +18,11 @@
 
 <body>
     <div id="app" class="container mt-4">
+        <!-- Main app HTML -->
         <h1 class="text-center text-secondary"><b class="text-primary">FOHS</b> ScoreTracker</h1>
+        <div class="text-center">
+            <canvas id="main-canvas" width="580" height="348" style="border: 1px solid white;"></canvas>
+        </div>
         <form @submit.prevent="addPlayer" class="mb-2">
             <div class="input-group">
                 <input class="form-control" placeholder="Name" v-model="newPlayerName">
@@ -32,6 +36,7 @@
         <div class="row g-2">
             <player v-for="player in players" v-bind="player"></player>
         </div>
+        <!-- Modals -->
         <div id="login" ref="login" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content border-0">
@@ -107,6 +112,7 @@
             </div>
         </div>
     </div>
+    <!-- Templates -->
     <template id="player-template">
         <div class="col-md-6">
             <div class="border bg-light p-1 clearfix">
@@ -122,23 +128,6 @@
             </div>
         </div>
     </template>
-    <center> <canvas id="viewport" width="580" height="348" style="border: 1px solid white;"> </canvas> </center>
-
-    <script>
-        var canvas = document.getElementById('viewport'),
-            context = canvas.getContext('2d');
-
-        make_base();
-
-        function make_base() {
-            base_image = new Image();
-            base_image.src = './court-placeholder.png';
-            base_image.onload = function () {
-                context.drawImage(base_image, 0, 0);
-            }
-        }
-    </script>
-
 </body>
 
 </html>

@@ -20,6 +20,15 @@ var app = Vue.createApp({
             backdrop: 'static'
         });
         this.loginModal.show();
+
+        var canvas = document.getElementById('main-canvas'),
+            context = canvas.getContext('2d');
+
+        base_image = new Image();
+        base_image.src = './court-placeholder.png';
+        base_image.onload = function () {
+            context.drawImage(base_image, 0, 0);
+        }
     },
     methods: {
         apiCall(path, args = {}) {
