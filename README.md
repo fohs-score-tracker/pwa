@@ -85,12 +85,12 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) --> 
 
-Here's a blank template to get started:
+<!--Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
 `fohs-score-tracker`, `pwa`, `twitter_handle`, `email`, `fohs-score-tracker`, `project_description`
-
+--> 
 
 ### Built With
 
