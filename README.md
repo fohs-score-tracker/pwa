@@ -187,15 +187,15 @@ Project Link: [https://github.com/fohs-score-tracker/pwa](https://github.com/foh
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/fohs-score-tracker/repo.svg?style=for-the-badge
-[contributors-url]: https://github.com/fohs-score-tracker/repo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/fohs-score-tracker/repo.svg?style=for-the-badge
-[forks-url]: https://github.com/fohs-score-tracker/repo/network/members
-[stars-shield]: https://img.shields.io/github/stars/fohs-score-tracker/repo.svg?style=for-the-badge
-[stars-url]: https://github.com/fohs-score-tracker/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/fohs-score-tracker/repo.svg?style=for-the-badge
-[issues-url]: https://github.com/fohs-score-tracker/repo/issues
-[license-shield]: https://img.shields.io/github/license/fohs-score-tracker/repo.svg?style=for-the-badge
-[license-url]: https://github.com/fohs-score-tracker/repo/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/fohs-score-tracker/pwa.svg?style=for-the-badge
+[contributors-url]: https://github.com/fohs-score-tracker/pwa/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/fohs-score-tracker/pwa.svg?style=for-the-badge
+[forks-url]: https://github.com/fohs-score-tracker/pwa/network/members
+[stars-shield]: https://img.shields.io/github/stars/fohs-score-tracker/pwa.svg?style=for-the-badge
+[stars-url]: https://github.com/fohs-score-tracker/pwa/stargazers
+[issues-shield]: https://img.shields.io/github/issues/fohs-score-tracker/pwa.svg?style=for-the-badge
+[issues-url]: https://github.com/fohs-score-tracker/pwa/issues
+[license-shield]: https://img.shields.io/github/license/fohs-score-tracker/pwa.svg?style=for-the-badge
+[license-url]: https://github.com/fohs-score-tracker/pwa/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/fohs-score-tracker
