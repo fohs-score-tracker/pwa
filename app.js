@@ -12,6 +12,7 @@ var app = Vue.createApp({
             passwordHint: "",
             players: [],
             waitingForLogin: false,
+            selectedPlayer: null
         };
     },
     mounted() {
