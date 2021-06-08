@@ -12,7 +12,13 @@ var app = Vue.createApp({
             passwordHint: "",
             players: [],
             waitingForLogin: false,
-            selectedPlayer: null
+            selectedPlayer: null,
+            x: 0,
+            y: 0,
+
+            // change these whenever we change court-placeholder.png
+            imgWidth: 549,
+            imgHeight: 320,
         };
     },
     mounted() {
@@ -21,15 +27,6 @@ var app = Vue.createApp({
             backdrop: "static",
         });
         this.loginModal.show();
-
-        var canvas = document.getElementById("main-canvas"),
-            context = canvas.getContext("2d");
-
-        base_image = new Image();
-        base_image.src = "./court-placeholder.png";
-        base_image.onload = function () {
-            context.drawImage(base_image, 0, 0);
-        };
     },
     methods: {
         apiCall(path, args = {}) {
@@ -93,6 +90,21 @@ var app = Vue.createApp({
                 .finally(() => {
                     this.waitingForLogin = false;
                 });
+        },
+        clicked(e) {
+            var rect = e.target.getBoundingClientRect();
+            var styles = getComputedStyle(this.$refs.court);
+            var x = e.clientX - rect.left;
+            var y = e.clientY - rect.top;
+            this.startRecordingShot(x, y);
+        },
+        startRecordingShot(x, y) {
+            // TODO: actually record a shot
+            var styles = getComputedStyle(this.$refs.court);
+            x /= parseInt(styles.getPropertyValue("width"));
+            y /= parseInt(styles.getPropertyValue("height"));
+            this.x = Math.round(x * 100);
+            this.y = Math.round(y * 50);
         },
     },
     provide() {

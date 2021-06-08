@@ -18,8 +18,12 @@
             </button>
             <h1 class="text-center text-secondary"><b class="text-primary">FOHS</b> ScoreTracker</h1>
             <div class="text-center">
-                <canvas id="main-canvas" width="580" height="348" style="border: 1px solid white"></canvas>
-                 <p v-if="selectedPlayer" >You have selected {{ selectedPlayer.name }} </p>    
+                <div class="d-inline-block bg-dark p-1 mw-100 col-12 col-lg-6 mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" :view-box.camel="`0 0 ${imgWidth} ${imgHeight}`" ref="court" @click="clicked">
+                        <image href="./court-placeholder.png" width="100%" height="100%" />
+                        <circle :cx="imgWidth * (x/100)" :cy="imgHeight * (y/50)" r="15" fill="var(--bs-primary)" class="pe-none" />
+                    </svg>
+                </div>
             </div>
             <form @submit.prevent="addPlayer" class="mb-2">
                 <div class="input-group">
@@ -49,7 +53,7 @@
                                 <button type="button" class="btn btn-close" @click="loginWarning = false"></button>
                             </p>
                             <p class="text-center">
-                                <img src="court-placeholder.png" class="img-fluid w-75" />
+                                <img src="court-placeholder.png" class="img-fluid w-75 border border-4 border-dark" />
                             </p>
                             <p>
                                 <!-- TODO: actually put something here -->
